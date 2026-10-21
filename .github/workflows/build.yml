@@ -15,7 +15,16 @@ jobs:
           distribution: temurin
           java-version: 17
 
-      - uses: android-actions/setup-android@v3
+      # ubuntu-latest 运行器已自带 Android SDK（含 build-tools / platform 34），
+      # 无需 android-actions/setup-android（该 action 在新版 cmdline-tools 下会失败）。
+      - name: 确认 Android SDK 环境
+        run: |
+          echo "ANDROID_HOME=$ANDROID_HOME"
+          ls "$ANDROID_HOME/platforms"
+          ls "$ANDROID_HOME/build-tools"
+
+      - name: 接受 Android SDK 许可
+        run: yes | sdkmanager --licenses > /dev/null 2>&1 || true
 
       - uses: gradle/actions/setup-gradle@v4
         with:
