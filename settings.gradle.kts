@@ -15,4 +15,4 @@ dependencyResolutionManagement {
 }
 
 rootProject.name = "QuickLock"
-include(":app"）
+include(":app")
